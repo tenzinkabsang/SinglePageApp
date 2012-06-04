@@ -635,3 +635,6 @@ ul#social li {
             width: auto;
         }
 }
+
+.updated { background-color: yellow }
+.delivered { color: green; text-decoration: line-through }

@@ -1,0 +1,20 @@
+
+<div class="content">
+    <h4>Hello</h4>
+    This is the <strong>mobile</strong> layout.
+    
+    Current view parameter is:
+    <strong data-bind="text: nav.params().view"></strong>
+</div>
+
+
+
+<script src="~/Scripts/App/DeliveryViewModel.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        upshot.metadata(@(Html.Metadata<MySinglePageApp.Controllers.DataServiceController>()));
+
+        ko.applyBindings(new MobileDeliveriesViewModel());
+
+    });
+</script>
