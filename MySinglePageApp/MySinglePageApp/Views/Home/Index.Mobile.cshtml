@@ -1,20 +1,22 @@
+@using MySinglePageApp.Controllers
+@(Html.UpshotContext(bufferChanges: false).DataSource<DataServiceController>(x => x.GetDeliveriesForToday()))
 
-<div class="content">
-    <h4>Hello</h4>
-    This is the <strong>mobile</strong> layout.
-    
-    Current view parameter is:
-    <strong data-bind="text: nav.params().view"></strong>
+<div data-bind="if: nav.params().view == 'deliveries'">
+    @Html.Partial("_DeliveriesList")
 </div>
 
+<div data-bind="if: nav.params().view == 'customers'">
+    @Html.Partial("_CustomersList")
+</div>
+
+<div data-bind="with: currentDelivery">
+    @Html.Partial("_DeliveryDetails")
+</div>
 
 
 <script src="~/Scripts/App/DeliveryViewModel.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function() {
-        upshot.metadata(@(Html.Metadata<MySinglePageApp.Controllers.DataServiceController>()));
-
         ko.applyBindings(new MobileDeliveriesViewModel());
-
     });
 </script>

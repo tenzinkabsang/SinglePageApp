@@ -23,17 +23,17 @@ namespace MySinglePageApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { controller = "DataService", id = RouteParameter.Optional }
-            );
-
             //routes.MapHttpRoute(
-            //      name: "DataService", // Route name
-            //      routeTemplate: "api/DataService/{action}", // URL with parameters
-            //      defaults: new { controller = "DataService" } // Parameter defaults
-            //    );
+            //    name: "DefaultApi",
+            //    routeTemplate: "api/{controller}/{action}/{id}",
+            //    defaults: new { controller = "DataService", id = RouteParameter.Optional }
+            //);
+
+            routes.MapHttpRoute(
+                  name: "DefaultApi", // Route name
+                  routeTemplate: "api/{controller}/{action}", // URL with parameters
+                  defaults: new { controller = "DataService" } // Parameter defaults
+                );
 
             routes.MapRoute(
                 name: "Default",

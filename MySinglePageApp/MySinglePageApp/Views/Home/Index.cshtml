@@ -9,6 +9,8 @@
 </section>
 }
 
+@(Html.UpshotContext(bufferChanges: true).DataSource<DataServiceController>(x => x.GetDeliveriesForToday()))
+
 <button data-bind="click: saveAll">Save all</button>
 <button data-bind="click: revertAll">Revert all</button>
 
@@ -41,9 +43,6 @@
 <script src="~/Scripts/App/DeliveryViewModel.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function() {
-        upshot.metadata(@(Html.Metadata<MySinglePageApp.Controllers.DataServiceController>()));
-
         ko.applyBindings(new DeliveriesViewModel());
-
     });
 </script>

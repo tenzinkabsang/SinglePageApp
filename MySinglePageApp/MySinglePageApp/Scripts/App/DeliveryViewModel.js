@@ -3,18 +3,19 @@
 function DeliveriesViewModel() {
     // Private
     var self = this;
-    var dataSourceOptions = {
+    /*var dataSourceOptions = {
         providerParameters: {
             url: "/api/DataService",
             operationName: "GetDeliveriesForToday"
         },
         entityType: "Delivery:#MySinglePageApp.Models",
-        bufferChanges: true,
+        bufferChanges: false,
         mapping: Delivery
-    };
-
+    };*/
+    //self.dataSource = new upshot.RemoteDataSource(dataSourceOptions).refresh();
+    
     // Public Properties
-    self.dataSource = new upshot.RemoteDataSource(dataSourceOptions).refresh();
+    self.dataSource = upshot.dataSources.DeliveriesForToday.refresh();
 
     // source: fetch the underlying data from the dataSource
     // autoRefresh: anytime the underlying data changes, change the local data as well
@@ -61,17 +62,26 @@ function Delivery(data) {
 function MobileDeliveriesViewModel() {
     // Inherit from DeliveriesViewModel
     var self = this;
-    DeliveriesViewModel(self);
+    DeliveriesViewModel.call(self);
 
     // Data
+    self.currentDelivery = ko.observable();
     self.nav = new NavHistory({
-        params: { view: "deliveries" } // Will be able to switch between multiple
+        params: { view: "deliveries", deliveryId: null },
+        onNavigate: function (navEntry) {
+            var requestedDeliveryId = navEntry.params.deliveryId;
+            self.dataSource.findById(requestedDeliveryId, self.currentDelivery);
+        }
     });
 
-    // Operations
-    self.showDeliveries = function () { self.nav.navigate({ view: 'deliveries' }); }
-    self.showCustomers = function () { self.nav.navigate({ view: 'customers' }); }
-
     self.nav.initialize({ linkToUrl: true });
+
+    // Operations
+    self.showDeliveries = function () { self.nav.navigate({ view: 'deliveries'}); }
+    self.showCustomers = function () { self.nav.navigate({ view: 'customers'}); }
+
+    self.showDelivery =function (delivery) {
+        self.nav.navigate({ view: 'delivery', deliveryId: delivery.DeliveryId() })
+    }
     
 }
